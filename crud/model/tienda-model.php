@@ -11,12 +11,20 @@
             //var_dump($resultado); // Mostramos el array de la consulta en pantalla
         }
 
-
-        public function delete_cliente($cliente_id){
+        public function get_tiendas_id($id){
             parent::conectar();
-            $sql = "DELETE FROM clientes WHERE id = ?";
+            $sql = "SELECT * FROM tienda WHERE id = ?";
             $consulta = $this->conexion->prepare($sql);
-            $consulta->bindValue(1, $cliente_id);
+            $consulta->bindValue(1, $id);
+            $consulta->execute();
+            return $consulta->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        public function delete_tienda($id){
+            parent::conectar();
+            $sql = "DELETE FROM tienda WHERE id = ?";
+            $consulta = $this->conexion->prepare($sql);
+            $consulta->bindValue(1, $id);
             $consulta->execute();
             return $consulta->fetchAll(PDO::FETCH_ASSOC);
         }
@@ -31,31 +39,19 @@
             return $consulta->fetchAll(PDO::FETCH_ASSOC);
         }
 
-        public function update_cliente($cliente_id, $cliente_nombre, $cliente_cedula, $cliente_direccion, $cliente_correo, $cliente_numero){
+        public function update_tienda($id, $nombre_tienda, $fecha_tienda){
             parent::conectar();
-            $sql = "UPDATE clientes SET nombre = ?, cedula = ?, direccion = ?, correo = ?, numero = ?
+            $sql = "UPDATE tienda SET nombre = ?, fecha_apertura = ?
                     WHERE id = ?";
             $consulta = $this->conexion->prepare($sql);
-            $consulta->bindValue(1, $cliente_nombre);
-            $consulta->bindValue(2, $cliente_cedula);
-            $consulta->bindValue(3, $cliente_direccion);
-            $consulta->bindValue(4, $cliente_correo);
-            $consulta->bindValue(5, $cliente_numero);
-            $consulta->bindValue(6, $cliente_id);
+            $consulta->bindValue(1, $nombre_tienda);
+            $consulta->bindValue(2, $fecha_tienda);
+            $consulta->bindValue(3, $id);
             $consulta->execute();
             return $consulta->fetchAll(PDO::FETCH_ASSOC);
         }
 
-        public function count_cliente(){
-            parent::conectar();
-            $sql = "SELECT * FROM clientes";
-            $consulta = $this->conexion->prepare($sql);
-            $consulta->execute();
-            return $consulta->rowCount();
-            //return $resultado;
-
-        }
-
     }
+
 
 ?>

@@ -11,33 +11,46 @@ $tienda = new Tiendas(); // Instancia de la clase Clientes
         
         case "info":
             $datos = $tienda->get_tiendas();
-            $opciones = "<option selected>Selecciona la tienda que deseas gestionar</option>";
+            $opciones = "<option value ='0' selected>Selecciona la tienda que deseas gestionar</option>";
             foreach($datos as $key){
-                $opciones .= "<option value=".$key['ID'].">".$key['nombre']."</option>";
+                $opciones .= "<option value=".$key['id'].">".$key['nombre']."</option>";
             }
-
             echo $opciones;
             break;
 
+        case "select":
+            if(isset($_POST['id'])){
+                $datos = $tienda->get_tiendas_id($_POST['id']);
+                session_start();
+                $_SESSION['tienda'] = $datos;
+                json_encode($_SESSION['tienda']);
+            }
+            break;
 
         case "eliminar":
-
             if(isset($_POST['id'])){
-                $cliente->delete_cliente($_POST['id']);
+                $tienda->delete_tienda($_POST['id']);
             }
             break;
         
         case "add":
-
+            $exp_reg = '/([3][0,1]|[0-2]\d)-([1][0-2]|[0]\d)-(\d\d\d\d)/';
             if(isset($_POST['nombre']) & isset($_POST['fecha'])){
-                $tienda->insert_tienda($_POST['nombre'], $_POST['fecha']);
+                $fecha = $_POST['fecha'];
+                if(!preg_match($exp_reg, $fecha)){
+                    $res = array("error"=> true);
+                    echo json_encode($res);
+                } else{
+                    $tienda->insert_tienda($_POST['nombre'], $_POST['fecha']);
+                }
+
             }
             break;
         case "edit":
-            if(isset($_POST['id']) & isset($_POST['nombre']) & isset($_POST['cedula']) & isset($_POST['direccion']) & isset($_POST['correo']) & isset($_POST['numero'])){
-                $cliente->update_cliente($_POST['id'], $_POST['nombre'], $_POST['cedula'], $_POST['direccion'], $_POST['correo'], $_POST['numero']);
+            if(isset($_POST['id']) & isset($_POST['nombre']) & isset($_POST['fecha'])){
+                $tienda->update_tienda($_POST['id'],$_POST['nombre'], $_POST['fecha']);
             }
-            break;      
+            break;     
 
         default:
             break;
