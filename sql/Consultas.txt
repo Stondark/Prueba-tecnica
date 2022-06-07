@@ -22,3 +22,19 @@ ORDER BY
 
 
 REPORTE 2
+
+SELECT
+    p.CC,
+    p.Nombre,
+    e.Institucion,
+    e.fecha
+FROM
+    `persona` p
+INNER JOIN estudios e ON
+    p.CC = e.FKPersona
+WHERE
+    e.Institucion <> "Los andes"
+GROUP BY
+    e.fecha
+DESC
+    ;

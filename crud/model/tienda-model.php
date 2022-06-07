@@ -7,8 +7,6 @@
             $consulta = $this->conexion->prepare($sql);
             $consulta->execute();
             return $consulta->fetchAll(PDO::FETCH_ASSOC);
-            //echo json_encode($resultado);
-            //var_dump($resultado); // Mostramos el array de la consulta en pantalla
         }
 
         public function get_tiendas_id($id){
