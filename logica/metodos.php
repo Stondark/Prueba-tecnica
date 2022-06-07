@@ -7,14 +7,14 @@ Class Metodos{
             return $tmp % 3 == 0 || $tmp % 5 == 0;}));
 
 
-        // Invocamos el método array_sum el cuál le pasaremos 
-        // otro método array_filter donde el cuál le creamos un array con la función range y también creamos 
-        // otra función temporar donde estará el condicional de valores a buscar
+        // Invocamos el método array_sum el cuál le pasaremos como parámetro
+        // otro método array_filter el cuál nos ayudará a filtrar los múltiplos de 3 y 5, le pasamos como parámetro
+        // la creación de un array con el método range y la función que nos retornará los múltiplos
     }
 
     public function invertirPalabras(string $string): string{
         $palabras = explode(" ", $string); // Convertimos el string en un Array "Bienvenido a Treda Solutions" => Array ( [0] => Bienvenido [1] => a [2] => Treda [3] => Solutions )
-        for($i = 0; $i < count($palabras); $i++ ){
+        for($i = 0; $i < count($palabras); $i++ ){ // Recorremos el array
             if(strlen($palabras[$i]) > 5){ // Si la palabra en dicha posición es mayor a 5 usar el método strrev para invertir la palabra
                 $palabras[$i] = strrev($palabras[$i]);
             }
