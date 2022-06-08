@@ -33,8 +33,8 @@
 
         public function update_producto( $nombre, $descripcion, $valor, $id_tienda, $imagen, $sku){
             parent::conectar();
-            $sql = "UPDATE tienda SET nombre = ?, descripcion = ?, valor = ?, id_tienda = ?, imagen = ?
-                    WHERE SKU = ?";
+            $sql = "UPDATE producto SET nombre = ?, descripcion = ?, valor = ?, id_tienda = ?, imagen = ?
+                    WHERE `producto`.`SKU` = ?";
             $consulta = $this->conexion->prepare($sql);
             $consulta->bindValue(1, $nombre);
             $consulta->bindValue(2, $descripcion);

@@ -80,7 +80,7 @@ function dibujarProductos(id) {
     });
 
     delete_producto("#productos-table tbody",table);
-    edit_tienda("#productos-table tbody",table, id_tienda);
+    edit_producto("#productos-table tbody",table, id_tienda);
     submit_producto(table, id_tienda);
 }
 
@@ -136,10 +136,10 @@ var delete_producto = function(tbody, table){
 
 // EDITAR TIENDA
 
-var edit_tienda = function(tbody, table, id_tienda){
+var edit_producto = function(tbody, table, id_tienda){
     $(tbody).on("click", "button.edit_p", function(){
         var data = table.row($(this).parents("tr")).data();
-        var id_inputs = $("#lista-table #edit").val(data.SKU);
+        var id_inputs = $("#productos-table #edit_p").val(data.SKU);
         var id_producto = data.SKU;
         var nombre_producto = data.nombre;
         console.log(id_tienda);
