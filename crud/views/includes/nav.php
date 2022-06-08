@@ -9,15 +9,6 @@
 <!-- CSS only -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 
-<?php
-
-if(!isset($_SESSION['tienda'])){
-  echo "Error";
-} else{
-  print_r($_SESSION['tienda']);
-}
-
-?>
 <nav class="navbar navbar-expand-lg bg-light">
   <div class="container-fluid">
     <a class="navbar-brand" href="../views/index.php">Tienda</a>
@@ -26,12 +17,6 @@ if(!isset($_SESSION['tienda'])){
     </button>
     <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="../views/tiendas.php">Tiendas</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="../productos.php">Productos</a>
-        </li>
       </ul>
     </div>
   </div>

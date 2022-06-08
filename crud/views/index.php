@@ -27,7 +27,6 @@
             <a id="select-btn" class="btn btn-primary">Seleccionar</a>
             <p class="card-text">Si no hay ninguna tienda prueba créandola 🤩</p>
             <a id="crear-tienda" class="btn btn-primary">Crear</a>
-            <a id="mostrar-tienda" class="btn btn-primary">Mostrar tiendas</a>
         </div>
     </div>
     <table id="lista-table" class="table">

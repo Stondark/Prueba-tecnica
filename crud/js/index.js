@@ -82,6 +82,7 @@ function dibujarProductos(id) {
     delete_producto("#productos-table tbody",table);
     edit_producto("#productos-table tbody",table, id_tienda);
     submit_producto(table, id_tienda);
+    
 }
 
 // ELIMINAR PRODUCTO 
@@ -134,7 +135,7 @@ var delete_producto = function(tbody, table){
     });
 };
 
-// EDITAR TIENDA
+// EDITAR PRODUCTO
 
 var edit_producto = function(tbody, table, id_tienda){
     $(tbody).on("click", "button.edit_p", function(){
@@ -209,8 +210,8 @@ var edit_producto = function(tbody, table, id_tienda){
 // CREAR NUEVO PRODUCTO
 
 // AJAX-> NUEVA TIENDA
-var submit_producto = function(table, id){
-    if(!$.fn.DataTable.isDataTable("#crear-producto") ){
+var submit_producto = function(table, id_tienda){
+    if($("#select_list").val() != 0){
         $("#crear-producto").on("click", function () {
             Swal.fire({
                 title: "Añadir nuevo producto",
@@ -242,7 +243,7 @@ var submit_producto = function(table, id){
                 }
             }).then((result) =>{
                 if(result.isConfirmed && result){
-                    ajax_nuevoProducto(id);
+                    ajax_nuevoProducto(id_tienda);
                     table.ajax.reload();
                 }
             })
@@ -253,20 +254,19 @@ var submit_producto = function(table, id){
     
 }
 
-function ajax_nuevoProducto(id){
+function ajax_nuevoProducto(id_tienda){
 
-    var datos = new FormData($("#form-new-insert")[0]);
-    //let parametros = { "nombre": nombre_producto, "descripcion": descripcion, "valor": valor, "id_tienda": id, "foto": foto}
+    var aux_nombre = Swal.getPopup().querySelector("#nombre").value;
+    var nombre_producto = aux_nombre[0].toUpperCase() + aux_nombre.slice(1); // Convertir primer carácter a mayúscula
+    var descripcion = Swal.getPopup().querySelector("#descripcion").value;
+    var valor = Swal.getPopup().querySelector("#valor").value;
+    var foto = Swal.getPopup().querySelector("#foto").value;
+    let parametros = {"nombre": nombre_producto, "descripcion": descripcion, "valor": valor, "id_tienda": id_tienda, "foto": foto};
     $.ajax({
-        data: datos,
+        data: parametros,
         url: '../controller/productos-controller.php?op=add',
         type: 'POST',
-        proccessData: 'false',
-        contentType: 'false',
-        cache: 'false',
         success: function(){
-            load_tienda();
-
             Swal.fire({
                 title: 'Añadido!',
                 text: nombre_producto + ' se añadió correctamente',
