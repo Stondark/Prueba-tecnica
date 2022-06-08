@@ -31,6 +31,12 @@ $producto = new Productos(); // Instancia de la clase Clientes
 
             break;
 
+        case "edit":
+
+            if(isset($_POST['sku']) & isset($_POST['nombre']) & isset($_POST['descripcion']) & isset($_POST['valor']) & isset($_POST['id_tienda']) & isset($_POST['foto'])){
+                $datos = $producto->update_producto($_POST['nombre'], $_POST['descripcion'], $_POST['valor'], $_POST['id_tienda'], $_POST['imagen'], $_POST['sku']);
+            }
+        
         default:
             break;
     }

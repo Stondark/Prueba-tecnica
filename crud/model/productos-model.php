@@ -31,14 +31,17 @@
             return $consulta->fetchAll(PDO::FETCH_ASSOC);
         }
 
-        public function update_tienda($id, $nombre_tienda, $fecha_tienda){
+        public function update_producto( $nombre, $descripcion, $valor, $id_tienda, $imagen, $sku){
             parent::conectar();
-            $sql = "UPDATE tienda SET nombre = ?, fecha_apertura = ?
-                    WHERE id = ?";
+            $sql = "UPDATE tienda SET nombre = ?, descripcion = ?, valor = ?, id_tienda = ?, imagen = ?
+                    WHERE SKU = ?";
             $consulta = $this->conexion->prepare($sql);
-            $consulta->bindValue(1, $nombre_tienda);
-            $consulta->bindValue(2, $fecha_tienda);
-            $consulta->bindValue(3, $id);
+            $consulta->bindValue(1, $nombre);
+            $consulta->bindValue(2, $descripcion);
+            $consulta->bindValue(3, $valor);
+            $consulta->bindValue(4, $id_tienda);
+            $consulta->bindValue(5, $imagen);
+            $consulta->bindValue(6, $sku);
             $consulta->execute();
             return $consulta->fetchAll(PDO::FETCH_ASSOC);
         }
