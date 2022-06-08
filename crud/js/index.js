@@ -22,33 +22,53 @@ $( document ).ready(function() {
         "responsive": true,
 
     });
+    
     load_tienda();
     submit_tienda(table);
     edit_tienda("#lista-table tbody",table);
     delete_tienda("#lista-table tbody",table);
+
 });
 
 $("#select-btn").on("click", function () {
-    let id = $("#select_list").val()
-    id == 0 ? Swal.fire("Seleccione una tienda válida") : select_tienda(id);
+    var id = $("#select_list").val();
+    id == 0 ? Swal.fire("Seleccione una tienda válida") : dibujarProductos(id);
 
 });
 
 
+function dibujarProductos(id) {
+    var table = $("#productos-table").DataTable({ // Inicialización del datatable
+        "destroy": true,
+        "language": {
+            url: "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json",
+        },
+        "ajax":{  
+            url: "../controller/productos-controller.php?op=listar",
+            data: {"id": id},
+            type: "POST",
+            datatype: "json",
+            dataSrc: "",
+        },
+        "columns": [
+            {data: "SKU"},
+            {data: "nombre"},
+            {data: "descripcion"},
+            {data: "valor"},
+            {data: "id_tienda"},
+            {data: "imagen"},
+            {data: null,
+                defaultContent: "<button class='delete' id='delete' value=''><i class='fa-solid fa-trash'></i></button> <button class='edit' id='edit' value=''><i class='fa-solid fa-pen'></i></button>" ,
+                orderable: false,
+            }
+        ],
+        "responsive": true,
 
-// SELECTOR DE TIENDA
-
-function select_tienda(id){
-    let parametros = {"id": id}
-    $.ajax({
-        url: '../controller/tienda-controller.php?op=select',
-        type: 'POST',
-        data: parametros
-    })
-    .done(function(res){
-        Swal.fire("Se seleccionó la tienda")
-    })
+    });
 }
+
+
+
 
 
 // CARGAR TIENDAS

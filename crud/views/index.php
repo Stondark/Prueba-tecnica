@@ -26,8 +26,8 @@
             <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="select_list"> </select>
             <a id="select-btn" class="btn btn-primary">Seleccionar</a>
             <p class="card-text">Si no hay ninguna tienda prueba créandola 🤩</p>
-
             <a id="crear-tienda" class="btn btn-primary">Crear</a>
+            <a id="mostrar-tienda" class="btn btn-primary">Mostrar tiendas</a>
         </div>
     </div>
     <table id="lista-table" class="table">
@@ -42,7 +42,21 @@
             </tr>
         </thead>
     </table>
-
+    <table id="productos-table" class="table">
+        <thead>
+            <tr>
+                <th>SKU</th>
+                <th>NOMBRE</th>
+                <th>DESCRIPCION</th>
+                <th>VALOR</th>
+                <th>TIENDA</th>
+                <th>IMAGEN</th>
+                <th>
+                    <!-- Botones editar y eliminar-->
+                </th>
+            </tr>
+        </thead>
+    </table>
     <script src="../js/index.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 </body>

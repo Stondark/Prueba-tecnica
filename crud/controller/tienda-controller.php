@@ -18,15 +18,6 @@ $tienda = new Tiendas(); // Instancia de la clase Clientes
             echo $opciones;
             break;
 
-        case "select":
-            if(isset($_POST['id'])){
-                $datos = $tienda->get_tiendas_id($_POST['id']);
-                session_start();
-                $_SESSION['tienda'] = $datos;
-                json_encode($_SESSION['tienda']);
-            }
-            break;
-
         case "eliminar":
             if(isset($_POST['id'])){
                 $tienda->delete_tienda($_POST['id']);
