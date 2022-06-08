@@ -30,16 +30,29 @@ $( document ).ready(function() {
 
 });
 
+
+
+// CREAR NUEVA TABLA
+
 $("#select-btn").on("click", function () {
     var id = $("#select_list").val();
-    id == 0 ? Swal.fire("Seleccione una tienda válida") : dibujarProductos(id);
+    var table = $('#productos-table').DataTable();
+    table.clear().destroy();
+    if(id == 0){
+        Swal.fire("Seleccione una tienda válida")
+    } else{
+        Swal.fire("Tabla seleccionada")
+        dibujarProductos(id);
+    }
 
 });
 
-
 function dibujarProductos(id) {
+    var id_tienda = id;
     var table = $("#productos-table").DataTable({ // Inicialización del datatable
         "destroy": true,
+        "deferRender": true,
+        "retrieve": true,
         "language": {
             url: "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json",
         },
@@ -65,10 +78,132 @@ function dibujarProductos(id) {
         "responsive": true,
 
     });
+
+    delete_producto("#productos-table tbody",table);
+    submit_producto(table, id_tienda);
 }
 
+// ELIMINAR PRODUCTO 
+
+/* Función para el botón eliminar */
+var delete_producto = function(tbody, table){
+    $(tbody).on("click", "button.delete", function(){
+        var data = table.row($(this).parents("tr")).data();
+        //var id_inputs = $("#productos-table #delete").val(data.SKU);
+        var sku_producto = data.SKU;
+        alerta_eliminar(sku_producto);
+        console.log(data.SKU);
+
+/* Petición ajax para eliminar el producto */
+
+        function ajax_producto(sku_producto) {
+            let parametros = { "sku": sku_producto }
+            $.ajax({
+                data: parametros,
+                url: '../controller/productos-controller.php?op=delete',
+                type: 'POST',
+                success:function(){
+                    Swal.fire({
+                            title: '¡Borrado con éxito!',
+                            text: data.nombre + ' fue borrado con éxito',
+                            icon: 'success',
+                    })
+                }, 
+            })
+        }
+
+/* Función para mostrar la alerta de confirmación */
+        function alerta_eliminar(sku_producto) {
+            Swal.fire({
+                title: '¿Está seguro de eliminar el producto?',
+                text: 'El producto ' + data.nombre + '(' + data.SKU +') será eliminado',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#EB5160',
+                cancelButtonText: 'Cancelar',
+                confirmButtonText: 'Sí, elimínalo'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    ajax_producto(sku_producto); // Llamado a la petición ajax
+                    table.ajax.reload(); // Recarga de la tabla 
+                }
+            })
+        }
+    });
+};
 
 
+// CREAR NUEVO PRODUCTO
+
+// AJAX-> NUEVA TIENDA
+var submit_producto = function(table, id){
+    if(!$.fn.DataTable.isDataTable("#crear-producto") ){
+        $("#crear-producto").on("click", function () {
+            Swal.fire({
+                title: "Añadir nuevo producto",
+                html:
+                ' <form id="form-new-insert" enctype="multipart/form-data> "' +
+                '<label for="">NOMBRE</label>' +
+                '<input type="text" id="nombre" name="nombre" class="swal2-input">' +
+                '<label for="">DESCRIPCIÓN</label>' +
+                '<textarea id="descripcion" name="descripcion" class="swal2-input"></textarea>'+
+                '<label for="">VALOR</label>' +
+                '<input type="number" id="valor" name="valor" class="swal2-input">' +
+                '<label for="">IMAGEN</label>' +
+                '<input type="file" id="foto" name="foto" class="swal2-input">' +
+                '</form>',
+                focusConfirm: false,
+                showCloseButton: true,
+                showCancelButton: true,
+                confirmButtonText: "Guardar",
+                cancelButtonText: "Cancelar",
+                preConfirm: () => {
+                    let nombre = document.getElementById('nombre').value
+                    let descripcion = document.getElementById('descripcion').value
+                    let valor = document.getElementById('valor').value
+                    let foto = document.getElementById('foto').value
+                    if(!nombre || !descripcion || !valor || !foto){
+                        Swal.showValidationMessage("Ingrese valores en los campos vacíos");
+                    }
+                    return true;
+                }
+            }).then((result) =>{
+                if(result.isConfirmed && result){
+                    ajax_nuevoProducto(id);
+                    table.ajax.reload();
+                }
+            })
+        })
+    } else{
+        Swal.fire("Agregue una tabla primero");
+    }
+    
+}
+
+function ajax_nuevoProducto(id){
+
+    var datos = new FormData($("#form-new-insert")[0]);
+    //let parametros = { "nombre": nombre_producto, "descripcion": descripcion, "valor": valor, "id_tienda": id, "foto": foto}
+    $.ajax({
+        data: datos,
+        url: '../controller/productos-controller.php?op=add',
+        type: 'POST',
+        proccessData: false,
+        contentType: false,
+        cache: false,
+        success: function(){
+            load_tienda();
+
+            Swal.fire({
+                title: 'Añadido!',
+                text: nombre_producto + ' se añadió correctamente',
+                icon: 'success',
+            });
+            
+        }
+    })
+}
 
 
 // CARGAR TIENDAS

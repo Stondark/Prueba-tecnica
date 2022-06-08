@@ -12,19 +12,21 @@
 
         public function delete_producto($sku){
             parent::conectar();
-            $sql = "DELETE FROM tienda WHERE SKU = ?";
+            $sql = "DELETE FROM `producto` WHERE `producto`.`SKU` = ?";
             $consulta = $this->conexion->prepare($sql);
             $consulta->bindValue(1, $sku);
             $consulta->execute();
             return $consulta->fetchAll(PDO::FETCH_ASSOC);
         }
-
-        public function insert_tienda($nombre_tienda, $fecha_tienda){
+        public function insert_producto($nombre, $descripcion, $valor, $id_tienda, $imagen){
             parent::conectar();
-            $sql = "INSERT INTO tienda (id, nombre, fecha_apertura) VALUES (NULL, ?, ?);";
+            $sql = "INSERT INTO producto (`SKU`, `nombre`, `descripcion`, `valor`, `id_tienda`, `imagen`) VALUES (NULL, ?, ?, ?, ?, ?);";
             $consulta = $this->conexion->prepare($sql);
-            $consulta->bindValue(1, $nombre_tienda);
-            $consulta->bindValue(2, $fecha_tienda);
+            $consulta->bindValue(1, $nombre);
+            $consulta->bindValue(2, $descripcion);
+            $consulta->bindValue(3, $valor);
+            $consulta->bindValue(4, $id_tienda);
+            $consulta->bindValue(5, $imagen);
             $consulta->execute();
             return $consulta->fetchAll(PDO::FETCH_ASSOC);
         }

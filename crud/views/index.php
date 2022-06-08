@@ -42,6 +42,15 @@
             </tr>
         </thead>
     </table>
+    <div class="card text-center">
+        <div class="card-header">
+            Gestiona tu tienda
+        </div>
+        <div class="card-body">
+            <p class="card-text">Acá podrás añadir, actualizar y eliminar tus productos🤩</p>
+            <a id="crear-producto" class="btn btn-primary">Crear producto</a>
+        </div>
+    </div>
     <table id="productos-table" class="table">
         <thead>
             <tr>
