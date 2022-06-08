@@ -1,0 +1,11 @@
+!HOLA!
+
+
+Para ejecutar el proyecto lo primero que debes hacer es descargar el proyecto totalmente, después extraer la carpeta llamada
+"crud", si usas Xampp puedes ir a esta ruta C:\xampp\htdocs y ahí poner la carpeta del proyecto, después de hacer
+este procedimiento y tener el proyecto en tu carpeta de Xampp, ve a la ruta C:\xampp\htdocs\crud\db\ y ejecuta el archivo
+db.php con tu editor de texto preferido, ahí encontrarás un código de conexión a la base de datos y en la línea de código
+8 o donde dice protected $password pon la contraseña de tu localhost, después de haber hecho esto ejecuta el proyecto ;)
+
+Vídeo de referencias o ayuda:
+https://www.youtube.com/watch?v=E9HGpWPCxsY&ab_channel=YouDevice%21

@@ -5,7 +5,7 @@
         protected $host = "localhost";
         protected $db = "tiendas";
         protected $user = "root";
-        protected $password = "12345";
+        protected $password = "TU CONTRASEÑA ACÁ";
         protected $conexion;
 
         public function conectar(){
