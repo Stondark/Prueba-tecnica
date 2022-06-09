@@ -24,17 +24,20 @@ ORDER BY
 REPORTE 2
 
 SELECT
-    p.CC,
+	p.CC,
     p.Nombre,
-    e.Institucion,
-    e.fecha
+    estudios.Institucion,
+    maxfechas.fecha
 FROM
-    `persona` p
-INNER JOIN estudios e ON
-    p.CC = e.FKPersona
-WHERE
-    e.Institucion <> "Los andes"
-GROUP BY
-    e.fecha
-DESC
+    (
+    SELECT
+        FKPersona,
+        MAX(fecha) as fecha
+    FROM
+        estudios
+    GROUP BY
+        fkpersona
+) AS maxfechas
+INNER JOIN estudios ON maxfechas.FKPersona = estudios.FKPersona AND maxfechas.fecha = estudios.fecha
+INNER JOIN persona p ON p.CC = estudios.FKPersona;
     ;
